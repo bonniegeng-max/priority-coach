@@ -1,81 +1,122 @@
 # 优先级教练 · Priority Coach
 
-一个温和、克制、不压迫的个人成长教练 skill。灵感来自《会赚时间的妈妈》：**时间管理的核心不是做更多，而是定自己的优先级、找到自己的主线。**
+优先级教练是一个温和、克制、不压迫的个人成长教练 skill。它不帮用户把一天排满，而是帮用户在混乱里看清 **现在最值得先顾的事**，并落到一个今天就能开始的最小动作。
 
-> 很多人不是无事可做，而是每天忙完却想不起忙了什么，陷入一种"无意识、空虚"的循环。
-> 优先级教练不催你更高效，它帮你"更清楚"——看清此刻真正该先顾的事，找到属于自己的成长主线。
+当前版本 **v0.2.2**，基于 `0.2.1` 做了一次安全加固：
+- **全量 opt-in**：所有本地写入（会话摘要 + 完整结果卡）都必须先获得用户明确同意，未同意不落盘
+- **能力边界声明**：SKILL.md 新增"能力与信任边界"一节，明确声明本 skill 不联网、不执行 shell、不读写自身数据目录之外的文件
+- **发布包瘦身**：维护者用的迭代监控工具不再随发布包分发（见仓库内 `MAINTAINING.md`）
 
-适用人群：妈妈的角色、单身女性，或任何想"悦己"、想从混乱里收拢重点的人。
-
----
+`0.2.1` 相对 `0.1.2` 的主要变化：
+- 从“默认先做 5 问”升级为“先路由、再进入状态”
+- 新增 `overwhelmed_mode`，处理太乱、太累、选不动的场景
+- 统一 OpenClaw 语境与本地记录路径
+- 补齐完整状态脚本、最小记忆 schema 与发布文档
 
 ## 它能做什么
 
-用 **5 个温柔的问题**，从混乱中收敛出三层结果：
+### 1. 收拢重点
+帮助用户从“很多事缠在一起”里，收成当前最该优先的 1–3 件事。
 
-1. **你当前最该优先的 3 件事**
-2. **今天最小行动**（一个 15–60 分钟、可失败的小动作）
-3. **先不碰的事**（现在不必同时扛起的事）
+### 2. 定一个今天可开始的动作
+把重点落成一个 10–30 分钟可开始的最小动作，而不是一整份完美计划。
 
-冷启动完成后，还可按需进入：
+### 3. 陪用户过完整天
+支持：
+- `cold_start`
+- `priority_select`
+- `today_plan`
+- `morning_start`
+- `evening_wrap`
+- `habit_checkin`
+- `overwhelmed_mode`
 
-- **今日规划**：把高优事项拆成时间块，并自动预留 2–4 小时留白
-- **晨间启动**：确认状态、提醒 2 个重点、给 3 步晨间动作
-- **晚间收尾**：回顾完成、生成明日初稿、记一个最小复盘
-- **习惯陪跑**：从 1–2 个习惯开始，绑定触发点、温和打卡（不强打卡、不排名）
+### 4. 本地保存结果
+仅在用户同意时，保存结果卡到本地，方便下次续上。
 
----
+## 与 0.1.2 相比的关键变化
 
-## 核心理念
-
-- 私密优先，默认仅自己可见
-- 先澄清，再执行
-- 少输入，多归纳（AI 先给候选项，用户只勾选）
-- 不把人推向更忙，而是更清楚
-
----
-
-## 在 WorkBuddy 中使用
-
-将本目录作为 skill 安装到：
-
-- 用户级：`~/.workbuddy/skills/priority-coach/`
-- 项目级：`<项目>/.workbuddy/skills/priority-coach/`
-
-安装后，对 WorkBuddy 说类似的话即可触发：
-
-> "感觉每天好忙但不知道忙了什么，帮我理一下重点"
-> "想找到自己的成长主线"
-> "帮我做个今天的计划，留点空白"
-
----
+- **入口改造**：不再默认所有会话都走完整冷启动，而是先判断用户当下最需要哪种帮助
+- **过载降级**：新增低负担模式，不再强迫用户继续选 3 件事
+- **脚本更完整**：每个状态都有标准脚本和 next step
+- **文档更一致**：统一到 OpenClaw，而不是混用 WorkBuddy 文案
+- **记录更稳**：优先写入 `~/.openclaw/data/priority-coach/records.json`，兼容旧版 `~/.workbuddy` 路径
 
 ## 目录结构
 
-```
+```text
 priority-coach/
-├── SKILL.md                 # 主文件：角色 / 原则 / 交互 / 冷启动 / 输出格式 / 约束
-├── references/
-│   ├── cold-start.md        # 完整题库 + AI 归纳规则 + 候选项格式
-│   ├── daily-flows.md       # 今日规划 / 晨间 / 晚间 / 习惯陪跑 详细步骤
-│   └── copy-tone.md         # 温柔口吻微文案与表达禁忌
+├── SKILL.md
 ├── README.md
-└── LICENSE
+├── skill-card.md
+├── LICENSE
+├── references/
+│   ├── router.md
+│   ├── states.md
+│   ├── cold-start.md
+│   ├── daily-flows.md
+│   ├── memory-schema.md
+│   └── copy-tone.md
+└── scripts/
+    └── record.py
 ```
 
----
+## 在 OpenClaw 中使用
+
+### 安装公开版
+```bash
+~/.openclaw/bin/openclaw skills install @bonniegeng-max/priority-coach
+```
+
+### 查看当前 skill 信息
+```bash
+~/.openclaw/bin/openclaw skills info priority-coach --json
+```
+
+### 本地覆盖 / 调试
+如果要让本地版本优先生效，可把本目录内容回写到：
+
+```text
+~/.openclaw/workspace/skills/priority-coach
+```
+
+## 本地记录
+
+本地记录脚本：
+```bash
+python3 scripts/record.py list
+python3 scripts/record.py latest
+python3 scripts/record.py path
+```
+
+默认数据路径：
+```text
+~/.openclaw/data/priority-coach/records.json
+```
+
+兼容旧路径：
+```text
+~/.workbuddy/priority-coach/records.json
+```
+
+> 规则：只有在用户明确同意“保存 / 记下来”的情况下，才调用保存。
 
 ## 隐私边界
 
-- 用户本人可见自己的历史记录
-- 分享内容只暴露：3 个重点 + 今天最小行动 +（可选）"我需要的支持"
-- 不暴露原始回答、完整焦虑来源、敏感情绪细节
-- 默认本地优先，不自动上传
+- 默认不分享、不自动上传
+- 默认只保存结果卡，不保存完整原始回答
+- 分享给他人时，只暴露：3 个重点 + 今天最小行动 +（可选）我需要的支持
+- 不暴露：原始回答、完整焦虑来源、敏感情绪细节
 
----
+## 发布前检查建议
 
-## 来源与致谢
+- 跑一遍 `cold_start -> priority_select -> today_plan`
+- 跑一遍 `overwhelmed_mode`
+- 跑一遍 `morning_start`
+- 跑一遍 `evening_wrap`
+- 试一次 `record.py add/list/latest/delete`
+- 检查 README / skill-card / LICENSE / _meta.json 版本一致性
 
-方法灵感来自《会赚时间的妈妈》。本 skill 的对话流程、归纳规则与三层输出，是在该书"定自己的优先级"核心思想上的可操作化实现。视觉调性（暖陶土 + 鼠尾草绿 + 米白底）参考自项目早期 DESIGN.md。
+## License
 
-License: MIT
+MIT-0
