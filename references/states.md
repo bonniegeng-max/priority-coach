@@ -2,6 +2,9 @@
 
 下面是发布级 v2 推荐的标准脚本。使用时不必逐字照搬，但应保持结构和意图一致。
 
+> **记录铁律**：本文所有"记录动作"都受同一条规则约束——**必须先获得用户明确同意才写盘**。
+> 用户未同意、拒绝或未回应时，跳过记录动作，不产生任何文件。
+
 ---
 
 ## 0. 通用入口分流
@@ -105,7 +108,7 @@
 
 ### 记录动作
 - 如果本轮仍在中间态，只完成了“确定第一优先”，可以暂不写完整结果卡。
-- 若本轮自然停在这里，可写一条最小会话摘要，记录：`enteredState=priority_select`、`endedState=priority_select`、`completed=false/true`（按是否已形成清晰收束判断）。
+- 若本轮自然停在这里，且用户同意记录，可写一条最小会话摘要，记录：`enteredState=priority_select`、`endedState=priority_select`、`completed=false/true`（按是否已形成清晰收束判断）。用户未同意则跳过，不写任何文件。
 
 ---
 
@@ -159,7 +162,7 @@
 - 用户觉得还是太重 → 继续缩小动作或进入 `overwhelmed_mode`
 
 ### 记录动作
-- 如果本轮已经形成清晰的 **今日行动卡**，在结束时默认写入最小会话摘要。
+- 如果本轮已经形成清晰的 **今日行动卡**，在用户同意记录时写入最小会话摘要（未同意则跳过）。
 - 推荐记录：`enteredState=today_plan`、`endedState=today_plan`、`completed=true`、`resultType=action_card`。
 - 若用户明确表示“保存 / 记下来 / 下次继续”，再额外写入完整结果卡到 `records.json`。
 
@@ -202,7 +205,7 @@
 - 用户状态明显过载 → `overwhelmed_mode`
 
 ### 记录动作
-- 若用户已经拿到明确的启动动作并表示“我开始了 / 我先去做”，可写一条最小会话摘要。
+- 若用户已经拿到明确的启动动作并表示“我开始了 / 我先去做”，且用户同意记录，可写一条最小会话摘要；未同意则跳过。
 - 推荐记录：`enteredState=morning_start`、`endedState=morning_start`、`completed=true`、`resultType=action_card`。
 - 除非用户明确要求，否则不保存完整结果卡。
 
@@ -249,7 +252,7 @@
 - 结束今天
 
 ### 记录动作
-- 如果本轮已经形成 **晚间收尾卡**，在结束时默认写入最小会话摘要。
+- 如果本轮已经形成 **晚间收尾卡**，在用户同意记录时写入最小会话摘要（未同意则跳过）。
 - 推荐记录：`enteredState=evening_wrap`、`endedState=evening_wrap`、`completed=true`、`resultType=wrap_card`。
 - 若用户选择“保存成明天起点”，再额外写入完整结果卡到 `records.json`。
 
@@ -289,7 +292,7 @@
 你想让我帮你把今天要开始的那件事，压到 5 分钟版本吗？
 
 ### 记录动作
-- 若本轮已经识别出明确模式并形成一个“反模式动作”，可在结束时写入最小会话摘要。
+- 若本轮已经识别出明确模式并形成一个“反模式动作”，且用户同意记录，可在结束时写入最小会话摘要；未同意则跳过。
 - 推荐记录：`enteredState=habit_checkin`、`endedState=habit_checkin`、`completed=true`、`resultType=habit_card`。
 - 除非用户明确要求，否则不保存完整结果卡。
 
@@ -332,7 +335,7 @@
 - 今天就先停在这里
 
 ### 记录动作
-- 如果用户接受了低负担模式并完成本轮收束，默认写入最小会话摘要。
+- 如果用户接受了低负担模式并完成本轮收束，在用户同意记录时写入最小会话摘要（未同意则跳过）。
 - 推荐记录：`enteredState=overwhelmed_mode`、`endedState=overwhelmed_mode`、`completed=true`、`resultType=overwhelmed_card`。
 - 默认不保存完整结果卡，除非用户明确说“把这次也记下来”。
 
@@ -342,5 +345,5 @@
 > 那我们今天不选了。先只做一件最基础的事：去喝口水，或者把手机放下 3 分钟。做到这一步就够了。剩下的，我们晚一点再说。
 
 ### 极低负担兜底的记录动作
-- 若用户在这里结束本轮，也可写一条最小会话摘要。
+- 若用户在这里结束本轮，且用户同意记录，也可写一条最小会话摘要；未同意则跳过。
 - 推荐记录：`completed=false/true`（按是否形成基本收束判断），`dropoffRisk=high` 或 `routeConfidence=low` 视实际情况填写。

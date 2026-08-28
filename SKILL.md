@@ -1,7 +1,7 @@
 ---
 name: priority-coach
 description: 优先级教练——一个温和、克制、不压迫的个人成长教练 skill。帮助用户从混乱里收拢重点，找出此刻最该优先的 1–3 件事，并落到今天就能开始的最小动作。适用于“忙但空”“找不到重点”“想安排今天”“想开始第一步”“想收尾今天”“想稳定一个习惯”“现在太乱了想先减负”等场景。
-version: 0.2.2
+version: 0.2.3
 homepage: https://clawhub.ai/bonniegeng-max/skills/priority-coach
 license: MIT-0
 ---
@@ -241,7 +241,7 @@ python3 scripts/record.py session-add --data '{"sessionId":"sess_20260827_001","
 - `python3 scripts/record.py session-export`
 - `python3 scripts/record.py session-weekly-summary`
 
-默认写入：
+写入位置：
 - `~/.openclaw/data/priority-coach/sessions.json`
 
 ### 2. 完整结果卡（需明确同意）
@@ -260,7 +260,7 @@ python3 scripts/record.py add --data '{"date":"2026-08-26","state":"很多事缠
 - `python3 scripts/record.py export`
 - `python3 scripts/record.py weekly-summary`
 
-默认写入：
+写入位置：
 - `~/.openclaw/data/priority-coach/records.json`
 
 通用支持：

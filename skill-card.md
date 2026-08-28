@@ -52,7 +52,7 @@ Mitigation: The skill explicitly avoids making final life decisions for the user
 
 ## Skill Version(s):
 
-0.2.2 (source: frontmatter, release evidence, _meta.json)
+0.2.3 (source: frontmatter, release evidence, _meta.json)
 
 ## Ethical Considerations:
 
