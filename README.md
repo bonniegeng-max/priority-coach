@@ -2,11 +2,28 @@
 
 优先级教练是一个温和、克制、不压迫的个人成长教练 skill。它不帮用户把一天排满，而是帮用户在混乱里看清 **现在最值得先顾的事**，并落到一个今天就能开始的最小动作。
 
-当前版本 **v0.2.3**，基于 `0.2.1` 做了安全加固：
+当前版本 **v0.3.1**（基于 v0.3.0）。
+
+## 0.3.1（2026-09-03 · staged 草案）
+
+- **脚本说明补齐**：SKILL.md「资源 / scripts/」补充 `release_monitor.py` / `weekly_report.py` 用途说明——它们是仓库级维护者工具（发布 / 下载量监控、周报），不随 ClawHub 发布包分发，日常对话不触发，消除"悬空脚本"疑问
+- **新增案例示意**：SKILL.md 末尾新增"案例示意"小节，用一个抽象化的多重身份（主业 + 内容副业 + 育儿）"忙但空"场景演示 cold_start → priority_select → today_plan 全流程，标注可替换为 Bonnie 真实记录
+- 版本由 0.3.0 → 0.3.1（说明：GitHub 发布版尚为 0.2.3，本地 live 已是 0.3.0；本轮以本地 live 为基准递增）
+
+## 0.3.0 新增：主线回顾与断更承接
+
+- **断更承接**：用户停了一阵回来，不再从零冷启动——先读上次结果卡，问一句"还成立吗"，接上就走
+- **主线重检**：对比多次记录，输出"稳住 / 漂走 / 建议下车"三栏主线重检卡，回答"我定的优先级还对不对"
+- 不审判中断、不做打卡羞辱；回顾更新需用户同意，旧记录保留形成主线轨迹
+- 详见 `references/review.md`
+
+## 0.2.x 安全加固（相对 0.2.1）
+
 - **全量 opt-in**：所有本地写入（会话摘要 + 完整结果卡）都必须先获得用户明确同意，未同意不落盘
 - **能力边界声明**：SKILL.md 新增"能力与信任边界"一节，明确声明本 skill 不联网、不执行 shell、不读写自身数据目录之外的文件
 - **发布包瘦身**：维护者用的迭代监控工具不再随发布包分发（见仓库内 `MAINTAINING.md`）
 - **states.md 同步加固**：所有状态脚本的"记录动作"统一为同意后写入（0.2.3）
+- ClawHub 安全扫描已通过（staticScan / SkillSpector / VirusTotal 均 clean）
 
 `0.2.1` 相对 `0.1.2` 的主要变化：
 - 从“默认先做 5 问”升级为“先路由、再进入状态”
@@ -22,7 +39,7 @@
 ### 2. 定一个今天可开始的动作
 把重点落成一个 10–30 分钟可开始的最小动作，而不是一整份完美计划。
 
-### 3. 陪用户过完整天
+### 3. 陪用户过完整天，也接得住长周期
 支持：
 - `cold_start`
 - `priority_select`
@@ -30,6 +47,7 @@
 - `morning_start`
 - `evening_wrap`
 - `habit_checkin`
+- `mainline_review`（主线回顾 / 断更承接）
 - `overwhelmed_mode`
 
 ### 4. 本地保存结果
@@ -56,11 +74,14 @@ priority-coach/
 │   ├── states.md
 │   ├── cold-start.md
 │   ├── daily-flows.md
+│   ├── review.md
 │   ├── memory-schema.md
 │   └── copy-tone.md
 └── scripts/
     └── record.py
 ```
+
+> 注：GitHub 开发仓库的 `scripts/` 下另有维护者工具 `release_monitor.py` / `weekly_report.py`，不随发布包分发，未列入上表；详见 SKILL.md「资源 / scripts/」与仓库 `MAINTAINING.md`。
 
 ## 在 OpenClaw 中使用
 
