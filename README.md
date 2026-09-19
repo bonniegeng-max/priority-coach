@@ -141,4 +141,7 @@ python3 scripts/record.py path
 
 ## License
 
-MIT-0
+MIT（见 `LICENSE`）。
+
+> 注：ClawHub 的 skill 页会把许可证显示成 **MIT-0**——那是平台元数据的默认值，
+> `clawhub publish` 没有提供指定许可证的参数，改不了。**本仓库的 `LICENSE` 文件才是准的。**

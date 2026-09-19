@@ -10,7 +10,7 @@ This skill is ready for commercial/non-commercial use.
 
 ### License/Terms of Use:
 
-MIT-0
+MIT (see `LICENSE`)
 
 ## Use Case:
 
