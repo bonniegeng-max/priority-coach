@@ -1,7 +1,7 @@
 ---
 name: priority-coach
 description: A gentle, non-pressuring personal coach that helps you find the 1–3 things that matter right now and turn them into a smallest action you can start today. 优先级教练——温和、克制、不压迫，帮你从混乱里收拢重点，找出此刻最该优先的 1–3 件事，并落到今天就能开始的最小动作。Not for 团队项目管理、待办工具双向同步、或替你做人生决策。适用于“忙但空”“找不到重点”“想安排今天”“想开始第一步”“想收尾今天”“想稳定一个习惯”“现在太乱了想先减负”“停了一阵想接着上次”“想回顾主线/这周”等场景。
-version: 0.3.3
+version: 0.3.5
 homepage: https://clawhub.ai/bonniegeng-max/skills/priority-coach
 license: MIT
 ---
@@ -423,3 +423,7 @@ python3 scripts/record.py add --data '{"date":"2026-08-26","state":"很多事缠
 教练：今晚到这就够了。明天推进后如果愿意，晚上我们可以收一下，看这一件是不是真的让你“空”的感觉少了一点。
 
 > 提示：使用本 skill 时，把上面示例替换成用户自己当下的真实状态与记录即可。
+
+## Related skills
+
+- 需要先有「候选清单」再谈取舍时，用 `concept-radar` 把一批作者或链接里的概念捞出来打分，再交回本 skill 排优先级。
