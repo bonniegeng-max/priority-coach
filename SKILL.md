@@ -1,7 +1,8 @@
 ---
 name: priority-coach
 description: A gentle, non-pressuring personal coach that helps you find the 1–3 things that matter right now and turn them into a smallest action you can start today. 优先级教练——温和、克制、不压迫，帮你从混乱里收拢重点，找出此刻最该优先的 1–3 件事，并落到今天就能开始的最小动作。Not for 团队项目管理、待办工具双向同步、或替你做人生决策。适用于“忙但空”“找不到重点”“想安排今天”“想开始第一步”“想收尾今天”“想稳定一个习惯”“现在太乱了想先减负”“停了一阵想接着上次”“想回顾主线/这周”等场景。
-version: 0.3.5
+version: 0.3.6
+allowed-tools: Read, Write, Bash
 homepage: https://clawhub.ai/bonniegeng-max/skills/priority-coach
 license: MIT
 ---
@@ -356,10 +357,7 @@ python3 scripts/record.py add --data '{"date":"2026-08-26","state":"很多事缠
 
 ### scripts/
 - `record.py` · 本地记录读写（OpenClaw 路径优先，兼容 WorkBuddy 旧路径）
-- `release_monitor.py` ·（仅存在于 GitHub 开发仓库，不随 ClawHub 发布包分发）维护者用的发布 / 下载量监控脚本：保存每次迭代的代码快照与下载量基线、生成 diff 与周报；日常对话不触发，见仓库 `MAINTAINING.md`
-- `weekly_report.py` ·（同上，维护者工具）自动生成周报 / 增长对比报告；不随发布包分发，日常对话不触发
-
-> 维护者脚本说明：`release_monitor.py` / `weekly_report.py` 是仓库级的开发维护工具（约 47KB / 20KB），不属于 skill 运行时的能力，SKILL.md 在此仅为消除"悬空文件"疑问而作说明。若希望发布包与仓库文件一一对应，可考虑把这两个脚本移入 `scripts/dev/` 或从发布目录剔除——是否调整由 Bonnie 定夺；本轮仅做文档说明，不删文件。
+- `scripts/dev/` ·（仅存在于 GitHub 开发仓库，不随 ClawHub 发布包分发）维护者工具：`release_monitor.py`（发布/下载量监控）与 `weekly_report.py`（周报生成），日常对话不触发。
 
 ## 案例示意（示例，可替换为 Bonnie 的真实记录）
 
