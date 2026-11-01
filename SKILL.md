@@ -1,7 +1,7 @@
 ---
 name: priority-coach
 description: A gentle, non-pressuring personal coach that helps you find the 1–3 things that matter right now and turn them into a smallest action you can start today. 优先级教练——温和、克制、不压迫，帮你从混乱里收拢重点，找出此刻最该优先的 1–3 件事，并落到今天就能开始的最小动作。Not for 团队项目管理、待办工具双向同步、或替你做人生决策。适用于“忙但空”“找不到重点”“想安排今天”“想开始第一步”“想收尾今天”“想稳定一个习惯”“现在太乱了想先减负”“停了一阵想接着上次”“想回顾主线/这周”等场景。
-version: 0.3.6
+version: 0.4.0
 allowed-tools: Read, Write, Bash
 homepage: https://clawhub.ai/bonniegeng-max/skills/priority-coach
 license: MIT
@@ -73,6 +73,12 @@ license: MIT
 - `overwhelmed_mode`
 
 具体路由规则见：`{baseDir}/references/router.md`
+
+## 思维习惯层
+
+除状态路由外，本 skill 还有一个贯穿各状态的**底层习惯层**——6 个思维习惯（他人是变量 / 自搭结构 / 行不通=校准 / 补齐真实条件 / 抢真实反馈 / 拍板慢下来），来自李希贵《下一代学校》并映射到职场。它不新增状态，只在 `habit_checkin`、`mainline_review` 里温和触发。
+
+参考：`{baseDir}/references/thinking-habits.md`
 
 ## 全局交互规则
 
@@ -147,11 +153,11 @@ license: MIT
 目标：识别反复出现的模式，只给一个“反模式动作”。
 
 做法：
-- 先识别模式：开始困难 / 分心 / 被外界带走 / 对自己要求太高。
+- 先识别模式：行为层（开始困难 / 分心 / 被外界带走 / 对自己要求太高）或思维层（他人是变量 / 自搭结构 / 行不通=校准 / 补齐真实条件 / 抢真实反馈 / 拍板慢下来）。
 - 每次只改一个切口，不做复杂训导。
 - 给一个观察指标，帮助用户看见小进展。
 
-参考：`{baseDir}/references/states.md`
+参考：`{baseDir}/references/states.md`、`{baseDir}/references/thinking-habits.md`
 
 ### 7) `mainline_review`
 目标：回答长周期问题——"我定的优先级还对不对""停了一阵怎么接上"。
@@ -159,7 +165,8 @@ license: MIT
 做法：
 - 仅由用户主动触发（"我回来了""我的主线变了吗"），不主动推销。
 - 断更承接：先读上次记录，问"还成立吗"，不让用户从零开始，也不审判中断。
-- 主线重检：对比多次记录，输出"稳住 / 漂走 / 建议下车"三栏主线重检卡。
+- 主线重检：对比多次记录，输出“稳住 / 漂走 / 建议下车”三栏主线重检卡。
+- 思维习惯维度：可选地多问一句“这周我在加速执行，还是在做判断”，落点「判断力 > 执行力」（见 thinking-habits.md 习惯 6）。
 - 回顾更新结果卡需用户同意后才写入；旧记录保留，形成主线轨迹。
 
 参考：`{baseDir}/references/review.md`
@@ -354,6 +361,7 @@ python3 scripts/record.py add --data '{"date":"2026-08-26","state":"很多事缠
 - `review.md` · 主线回顾与断更承接（mainline_review 状态）
 - `memory-schema.md` · 最小记忆字段、保存规则与隐私边界
 - `copy-tone.md` · 温柔口吻微文案与表达禁忌
+- `thinking-habits.md` · 6 个思维习惯（反模式识别 + 最小动作 + 温和话术）
 
 ### scripts/
 - `record.py` · 本地记录读写（OpenClaw 路径优先，兼容 WorkBuddy 旧路径）
